@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Карта Москвы</title>
+    <!-- Подключите Leaflet CSS и JavaScript файлы -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        /* Стиль для заполнения всего экрана */
+        body, html, #map {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Создайте контейнер для карты -->
+    <div id="map"></div>
+
+    <script>
+        // Инициализация карты
+        var map = L.map('map').setView([55.7539, 37.6208], 13); // Координаты Арбата
+
+        // Добавление слоя карты
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Генерация случайных меток и их добавление на карту
+        for (var i = 0; i < 10; i++) {  // Создаем 10 случайных меток
+            var lat = 55.7517 + (Math.random() - 0.5) / 100;  // Случайные координаты в пределах Арбата
+            var lng = 37.5946 + (Math.random() - 0.5) / 100;
+            var randomNumber = Math.floor(Math.random() * 100) + 1;  // Случайное число от 1 до 100
+
+            // Выбор цвета в зависимости от случайного числа
+            var color = 'green';
+            if (randomNumber > 50 && randomNumber < 80) {
+                color = 'orange';
+            } else if (randomNumber >= 80) {
+                color = 'red';
+            }
+
+            // Создание метки и добавление ее на карту
+            L.circleMarker([lat, lng], { fillColor: color, radius: 10 }).addTo(map).bindPopup('Число: ' + randomNumber);
+        }
+    </script>
+</body>
+</html>
